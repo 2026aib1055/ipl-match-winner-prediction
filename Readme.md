@@ -179,6 +179,16 @@ predict_ipl_winner(
     first_innings_wickets=6
 )
 ```
+#Output
+
+Confusion matrix
+
+
+
+<img width="795" height="572" alt="confusion_matrix" src="https://github.com/user-attachments/assets/95b2daf5-ddba-4c61-a1bc-7da8d49df5d1" />
+
+
+
 
 The function prints the predicted winner and the estimated win probability for both teams. Change the input teams, venue, runs, and wickets to try another match.
 
