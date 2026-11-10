@@ -1,175 +1,109 @@
-# IPL Winner Prediction using Logistic Regression
-
-Predict the winner of an IPL match **at the end of the first innings** using first-innings score, wickets, team, and venue information. The notebook trains a Logistic Regression classifier and evaluates it on the newest matches in a time-based test split.
-
-## Problem Statement
-
-The goal is to predict whether the team batting first wins (`1`) or the chasing team wins (`0`) using information available when the first innings ends. Second-innings scores, win margin, and player of the match are not used as prediction features because they are only known after the match.
-
-- **Target:** `bat_first_won` (`1` = batting-first team won, `0` = chasing team won)
-- **Model:** Logistic Regression (`C=0.1`)
-- **Dataset:** IPL matches dataset (2008–2026), sourced from Kaggle as referenced in the notebook
-- **Prediction point:** End of the first innings
-
-## Team Members and Roles
-
-| Team member | Roll/ID | GitHub username | Role |
-|---|---|---|---|
-| Ankit Bassi | `2026EEB1320` | `2026eeb1320` | Documentation Lead |
-| Yatharth Garg | `2026ESB1501` | `2026esb1501-create` | Documentation Lead |
-| Mannat | `2026AIB1055` | `2026aib1055` | Execution Lead |
-| Yash Meena | `2026EEB1426` | `2026eeb1426-ops`| PPT Lead |
-| Alankrit Tripathi | `2026MCB1508` | `Alanlol2007` | Video Lead |
-
-
-## Dataset
-
-The notebook reads `matches.csv`. The dataset contains one row per match and includes match season/date, teams, toss information, venue, innings runs and wickets, winner, and other match metadata.
-
-Notebook dataset summary:
-- Original data: **1,243 rows × 31 columns**
-- After cleaning: **1,218 matches**
-- Training set: **974 matches** (oldest 80%)
-- Test set: **244 matches** (newest 20%)
-
-The notebook currently loads the CSV using a local absolute path. For a fresh clone, place the dataset at `data/matches.csv` and update the notebook's `pd.read_csv(...)` line to:
-
-```python
-df = pd.read_csv("data/matches.csv")
-```
-
-The dataset file must be available locally; it is not included in this repository unless you add it.
-
-## Project Structure
-
+IPL Match Winner Prediction using Logistic Regression
+Predict whether the team batting first wins an IPL match, using only what is known at the end of the first innings: the score, the wickets lost, the two teams and the venue.
+AI101: Data Science and AI Essentials with Python, IIT Ropar.
+Problem Statement
+At the innings break we know the target, the wickets lost, who is chasing and where the match is played. Using only that information, we predict whether the team batting first wins (`1`) or the chasing team wins (`0`). Second-innings scores, win margins and player of the match are not used, because they are only known after the match and would give the answer away.
+Target: `bat_first_won` (`1` = batting-first team won, `0` = chasing team won)
+Model: Logistic Regression (`C=0.1`)
+Prediction point: end of the first innings
+Team Members and Roles
+Team member	Roll/ID	GitHub username	Role
+Mannat	`2026AIB1055`	`2026aib1055`	Execution Lead
+Ankit Bassi	`2026EEB1320`	`2026eeb1320`	Documentation Lead
+Yatharth Garg	`2026ESB1501`	`2026esb1501-create`	Documentation Lead
+Yash Meena	`2026EEB1426`	To be added	PPT Lead
+Alankrit Tripathi	`2026MCB1508`	`Alanlol2007`	Video Lead
+Dataset
+Source: IPL 2008–2026 Matches Dataset (Kaggle)
+File: `data/matches.csv` (included in this repository, so no download is needed)
+Size: 1,243 matches × 31 columns (one row per match: season, date, teams, toss, venue, runs and wickets of both innings, winner and other match details)
+After cleaning: 1,218 matches
+Training set: 974 matches (oldest 80%) · Test set: 244 matches (newest 20%)
+Project Structure
 ```text
-ipl-match-winner-prediction
+ipl-match-winner-prediction/
 ├── data/
-│   └── matches.csv                 
-├── ipl_match_prediction.ipynb
+│   └── matches.csv                      # Dataset (included)
+├── images/                              # Charts produced by the notebook (used below)
+├── slides/
+│   ├── IPL_Match_Winner_Prediction.pptx # 5-slide presentation
+│   └── IPL_Match_Winner_Prediction.pdf  # Same slides as PDF
+├── video/
+│   └── project_demo_link.txt            # Link to the project video
+├── ipl_match_prediction.ipynb           # Main notebook: data → model → results
 ├── requirements.txt
-├── README.md
-├── slides
-│    
-└── video
-               
+└── Readme.md
 ```
-
-## Methodology
-
-1. **Load data** from `matches.csv`.
-2. **Clean team names** by merging renamed franchises (Delhi Daredevils → Delhi Capitals, Kings XI Punjab → Punjab Kings, Royal Challengers Bangalore → Royal Challengers Bengaluru, and Rising Pune Supergiants → Rising Pune Supergiant).
-3. **Remove matches without a valid winner** and sort matches chronologically.
-4. **Identify the batting-first and chasing teams** from the toss winner and toss decision.
-5. **Create features:**
-   - `target_runs`: batting-first team's first-innings runs
-   - `target_wkts`: batting-first team's wickets
-   - `runs_vs_avg`: first-innings runs minus the rolling average of the previous 60 matches (using past matches only)
-   - batting-first team, chasing team, and venue (one-hot encoded)
-6. **Create target:** `bat_first_won`.
-7. **Split by time:** oldest 80% for training and newest 20% for testing.
-8. **Normalize numeric features** with `StandardScaler`, fitted on training data only.
-9. **Select features** using `SelectKBest(f_classif, k=15)`, fitted on training data only.
-10. **Train Logistic Regression** and evaluate predictions on the held-out test set.
-11. **Train an SGD classifier for 50 epochs** to plot training/testing log loss and create a learning curve.
-12. **Predict a new match** using the `predict_ipl_winner()` function.
-
-## Setup
-
-### Requirements
-
-- Python 3.10 or newer (recommended)
-- Jupyter Notebook or JupyterLab
-
-Install dependencies:
-
+Methodology
+Load data from `data/matches.csv`.
+Clean team names by merging renamed franchises (Delhi Daredevils → Delhi Capitals, Kings XI Punjab → Punjab Kings, Royal Challengers Bangalore → Royal Challengers Bengaluru, Rising Pune Supergiants → Rising Pune Supergiant).
+Remove matches without a valid winner and sort matches by date.
+Work out the batting-first and chasing teams from the toss winner and toss decision.
+Create features:
+`target_runs`: batting-first team's first-innings runs
+`target_wkts`: wickets the batting-first team lost
+`runs_vs_avg`: first-innings runs minus the average of the previous 60 matches (past matches only)
+batting-first team, chasing team and venue (one-hot encoded)
+Split by time: oldest 80% for training, newest 20% for testing, so the model never sees future matches.
+Scale numeric features with `StandardScaler`, fitted on the training data only.
+Select the 15 best features with `SelectKBest(f_classif, k=15)`, fitted on the training data only.
+Train Logistic Regression and evaluate it on the test set.
+Train an SGD classifier for 50 epochs to plot training/testing loss, and plot a learning curve.
+Predict a new match with the `predict_ipl_winner()` function.
+Setup
+Requirements: Python 3.10 or newer, and Jupyter Notebook (installed by `requirements.txt`).
+Tested with Python 3.13 and 3.14, pandas 3.0, NumPy 2.5, scikit-learn 1.9, Matplotlib 3.11, Seaborn 0.13.
+How to Run
+Run these commands in a terminal, in this order.
+1. Clone the repository
+```bash
+git clone https://github.com/2026aib1055/ipl-match-winner-prediction.git
+cd ipl-match-winner-prediction
+```
+2. Create and activate a virtual environment
 ```bash
 python -m venv .venv
 ```
-
-Activate the environment:
-
-**Windows**
+Windows:
 ```bash
 .venv\Scripts\activate
 ```
-
-**macOS / Linux**
+macOS / Linux:
 ```bash
 source .venv/bin/activate
 ```
-
-Install libraries:
-
+3. Install the libraries
 ```bash
 pip install -r requirements.txt
 ```
-
-### `requirements.txt`
-
-```text
-numpy
-pandas
-matplotlib
-seaborn
-scikit-learn
-jupyter
-```
-
-## How to Run
-
-Run the following commands from the repository root, after placing the dataset at `data/matches.csv` and updating the notebook CSV path as described above.
-
+4. Open the notebook
 ```bash
-git clone https://github.com/2026aib1055/ipl-match-winner-prediction
-cd ipl-match-winner-prediction
-python -m venv .venv
+jupyter notebook ipl_match_prediction.ipynb
 ```
-
-Activate the environment using the command for your operating system, then:
-
-```bash
-pip install -r requirements.txt
-jupyter notebook
-```
-
-1. Open `ipl_match_prediction.ipynb`.
-2. Confirm the dataset path points to `data/matches.csv`.
-3. Select **Kernel → Restart & Run All**.
-4. Run all cells in order to reproduce preprocessing, training, plots, metrics, and the sample prediction.
-
-## Results
-
-The notebook reports the following results on the **244-match test set**:
-
-| Metric | Result |
-|---|---:|
-| Accuracy | 0.689 |
-| Precision | 0.617 |
-| Recall | 0.829 |
-| F1 score | 0.708 |
-| MSE | 0.210 |
-| MAE | 0.392 |
-| RMSE | 0.459 |
-| ROC-AUC | 0.767 |
-| Baseline accuracy | 54.5% |
-
-The baseline always predicts the most common target class in the training data. The model's test accuracy is about 13.9 percentage points higher than this baseline.
-
-### Evaluation and Visualizations
-
-The notebook includes:
-- Correlation heatmap of numeric features and target
-- Training and testing loss versus epochs
-- Training and testing accuracy learning curve
-- Confusion matrix
-- Classification report and ROC-AUC
-- Function to predict a winner and win probabilities for a new match
-
-## Example: Predict a New Match
-
-The notebook includes this example:
-
+5. Run it: select Kernel → Restart & Run All. The dataset path is relative (`data/matches.csv`), so nothing needs to be changed.
+Results
+On the 244-match test set (the newest matches, never seen in training):
+Metric	Result
+Accuracy	0.684
+Precision	0.615
+Recall	0.820
+F1 score	0.703
+ROC-AUC	0.767
+MSE	0.207
+MAE	0.394
+RMSE	0.455
+Baseline accuracy	0.545
+The baseline always predicts the most common outcome in the training data. The model is about 14 percentage points more accurate than the baseline.
+Expected Output
+Confusion matrix: most mistakes are chasing wins predicted as batting-first wins.
+![Confusion matrix](images/confusion_matrix.png)
+Training loss vs epochs: training loss falls while testing loss rises slightly (mild overfitting). Both stay below the 50/50 guessing line.
+![Loss vs epochs](images/loss_vs_epochs.png)
+Learning curve:
+![Learning curve](images/learning_curve.png)
+Correlation heatmap:
+![Correlation heatmap](images/correlation_heatmap.png)
+Predicting a new match. The last cells of the notebook run:
 ```python
 predict_ipl_winner(
     batting_first_team="Chennai Super Kings",
@@ -179,66 +113,39 @@ predict_ipl_winner(
     first_innings_wickets=6
 )
 ```
-#Output
+Expected output:
+```text
+Predicted winner: Chennai Super Kings
+Chennai Super Kings win probability: 56.5%
+Mumbai Indians win probability: 43.5%
 
-Confusion matrix
+Chennai Super Kings make 220/4:
+Predicted winner: Chennai Super Kings
+Chennai Super Kings win probability: 82.1%
+Mumbai Indians win probability: 17.9%
 
-
-
-<img width="795" height="572" alt="confusion_matrix" src="https://github.com/user-attachments/assets/95b2daf5-ddba-4c61-a1bc-7da8d49df5d1" />
-
-Loss vs Epochs
-
-
-
-<img width="762" height="562" alt="epochs" src="https://github.com/user-attachments/assets/1421780a-de7c-4d2b-96dd-02386e4d5cbb" />
-
-Predict the winner of a new IPL match 
-
-
-<img width="1302" height="667" alt="Screenshot 2026-11-10 184618" src="https://github.com/user-attachments/assets/e052a71b-606a-4ebd-a876-54394539c095" />
-<img width="762" height="726" alt="Screenshot 2026-11-10 184759" src="https://github.com/user-attachments/assets/15aa3f85-b65d-4fd1-80fa-0f7f560e3e1b" />
-
-Predicted Winner : Mumbai Indians
-
-
-Chennai Super Kings win probability: 1.8%
-
-
-Mumbai Indians win probability : 98.2%
-
-
-
-
-
-
-
-The function prints the predicted winner and the estimated win probability for both teams. Change the input teams, venue, runs, and wickets to try another match.
-
-**Note:** This is a probability-based estimate, not a guarantee. The prediction uses only information available at the end of the first innings.
-
-## Limitations and Future Work
-
-### Limitations
-- Does not use ball-by-ball data, player quality, pitch conditions, or weather.
-- Test set contains 244 matches.
-- Cricket outcomes have uncertainty, particularly during the chase.
-- The notebook's local dataset path must be changed for other computers.
-
-### Future Work
-- Add player statistics and more match context.
-- Add features from the chase (for example, score after 10 overs) for a later prediction point.
-- Experiment with Random Forest or XGBoost and compare performance.
-
-## Project Links
-
-- **GitHub repository: https://github.com/2026aib1055/ipl-match-winner-prediction** 
-- **Presentation (exactly 5 slides): https://github.com/2026aib1055/ipl-match-winner-prediction/blob/main/IPL_Match_Winner_Prediction.pdf** 
-- **Project video (maximum 5 minutes):** 
-
-## AI-Use Disclosure
-
-- **Claude:** Used to assist with some coding. 
-- **ChatGPT:** Used to assist with README/documentation drafting. The team reviewed the documentation against the notebook and project requirements.
-- **Google Gemini:** Used by a team member to assist in preparing the project presentation(PPT).
-- The team is responsible for verifying the code, results, and documentation and for explaining the project during evaluation.
+Chennai Super Kings make 140/8:
+Predicted winner: Mumbai Indians
+Chennai Super Kings win probability: 20.5%
+Mumbai Indians win probability: 79.5%
+```
+More runs and fewer wickets lost give the batting-first team a higher chance, as expected. Change the teams, venue, runs and wickets to try another match. This is a probability estimate, not a guarantee.
+Limitations and Future Work
+Limitations
+Does not use ball-by-ball data, player quality, pitch conditions or weather.
+The test set has only 244 matches.
+Cricket outcomes are uncertain, especially during the chase.
+Future work
+Add player statistics and recent team form.
+Add features from the chase (for example, the score after 10 overs) for a later prediction point.
+Try Random Forest or XGBoost and compare performance.
+Project Links
+GitHub repository: https://github.com/2026aib1055/ipl-match-winner-prediction
+Presentation (5 slides): slides/IPL_Match_Winner_Prediction.pptx (PDF)
+Project video (max 5 minutes): see video/project_demo_link.txt
+AI-Use Disclosure
+Claude: used to help with some coding, and to find and fix a bug where the model was trained on unscaled features (which made the sample prediction wrong). We re-ran the notebook and checked the new results.
+ChatGPT: used to help draft the README and documentation. The team reviewed the documentation against the notebook and project requirements.
+Gemini: used to help draft slide templates.
+No AI was used to generate the dataset or the results.
+The team is responsible for the code, results and documentation, and can explain any part of the project.
