@@ -16,10 +16,10 @@ The goal is to predict whether the team batting first wins (`1`) or the chasing 
 | Team member | Roll/ID | GitHub username | Role |
 |---|---|---|---|
 | Ankit Bassi | `2026EEB1320` | `2026eeb1320` | Documentation Lead |
-| Yatharth Garg | `2026ESB1501` | To be added | Documentation Lead |
+| Yatharth Garg | `2026ESB1501` | `2026esb1501-create` | Documentation Lead |
 | Mannat | `2026AIB1055` | `2026aib1055` | Execution Lead |
 | Yash Meena | `2026EEB1426` | To be added | PPT Lead |
-| Alankrit Tripathi | `2026MCB1508` | To be added | Video Lead |
+| Alankrit Tripathi | `2026MCB1508` | `Alanlol2007` | Video Lead |
 
 
 ## Dataset
@@ -43,10 +43,10 @@ The dataset file must be available locally; it is not included in this repositor
 ## Project Structure
 
 ```text
-IPL_Winner_Prediction_Added_Only/
+ipl-match-winner-prediction/
 ├── data/
 │   └── matches.csv                 # Dataset (add locally; not included by default)
-├── IPL_Winner_Prediction_Added_Only.ipynb
+├── ipl_match_prediction.ipynb
 ├── requirements.txt
 ├── README.md
 ├── slides/
@@ -238,6 +238,6 @@ The function prints the predicted winner and the estimated win probability for b
 
 ## AI-Use Disclosure
 
-- **Claude:** Used to assist with some coding. The team should review and test the generated/assisted code and be able to explain it.
+- **Claude:** Used to assist with some coding. 
 - **ChatGPT:** Used to assist with README/documentation drafting. The team reviewed the documentation against the notebook and project requirements.
 - The team is responsible for verifying the code, results, and documentation and for explaining the project during evaluation.
