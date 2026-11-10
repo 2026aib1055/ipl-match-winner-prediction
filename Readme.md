@@ -19,7 +19,7 @@ At the innings break we know the target, the wickets lost, who is chasing and wh
 | Mannat | `2026AIB1055` | `2026aib1055` | Execution Lead |
 | Ankit Bassi | `2026EEB1320` | `2026eeb1320` | Documentation Lead |
 | Yatharth Garg | `2026ESB1501` | `2026esb1501-create` | Documentation Lead |
-| Yash Meena | `2026EEB1426` | To be added | PPT Lead |
+| Yash Meena | `2026EEB1426` | `2026eeb1426-ops` | PPT Lead |
 | Alankrit Tripathi | `2026MCB1508` | `Alanlol2007` | Video Lead |
 
 ## Dataset
