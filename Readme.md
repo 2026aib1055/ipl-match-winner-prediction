@@ -43,16 +43,16 @@ The dataset file must be available locally; it is not included in this repositor
 ## Project Structure
 
 ```text
-ipl-match-winner-prediction/
+ipl-match-winner-prediction
 ├── data/
-│   └── matches.csv                 # Dataset (add locally; not included by default)
+│   └── matches.csv                 
 ├── ipl_match_prediction.ipynb
 ├── requirements.txt
 ├── README.md
-├── slides/
-│   └── mini_project_presentation.pptx  # Add the 5-slide presentation
-└── video/
-    └── project_demo_link.txt           # Add public/unlisted video link
+├── slides
+│    
+└── video
+               
 ```
 
 ## Methodology
@@ -121,8 +121,8 @@ jupyter
 Run the following commands from the repository root, after placing the dataset at `data/matches.csv` and updating the notebook CSV path as described above.
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
-cd IPL_Winner_Prediction_Added_Only
+git clone https://github.com/2026aib1055/ipl-match-winner-prediction
+cd ipl-match-winner-prediction
 python -m venv .venv
 ```
 
@@ -133,7 +133,7 @@ pip install -r requirements.txt
 jupyter notebook
 ```
 
-1. Open `IPL_Winner_Prediction_Added_Only.ipynb`.
+1. Open `ipl_match_prediction.ipynb`.
 2. Confirm the dataset path points to `data/matches.csv`.
 3. Select **Kernel → Restart & Run All**.
 4. Run all cells in order to reproduce preprocessing, training, plots, metrics, and the sample prediction.
