@@ -1,0 +1,4 @@
+Project video (max 5 minutes):
+PASTE_VIDEO_LINK_HERE
+
+Make sure the link is set to "Unlisted" (YouTube) or "Anyone with the link can view" (Google Drive).
