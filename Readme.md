@@ -232,7 +232,7 @@ The function prints the predicted winner and the estimated win probability for b
 
 ## Project Links
 
-- **GitHub repository:** 
+- **GitHub repository: https://github.com/2026aib1055/ipl-match-winner-prediction** 
 - **Presentation (exactly 5 slides):** 
 - **Project video (maximum 5 minutes):** 
 
