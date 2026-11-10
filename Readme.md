@@ -193,6 +193,22 @@ Loss vs Epochs
 
 <img width="762" height="562" alt="epochs" src="https://github.com/user-attachments/assets/1421780a-de7c-4d2b-96dd-02386e4d5cbb" />
 
+Predict the winner of a new IPL match 
+
+
+<img width="1302" height="667" alt="Screenshot 2026-11-10 184618" src="https://github.com/user-attachments/assets/e052a71b-606a-4ebd-a876-54394539c095" />
+<img width="762" height="726" alt="Screenshot 2026-11-10 184759" src="https://github.com/user-attachments/assets/15aa3f85-b65d-4fd1-80fa-0f7f560e3e1b" />
+
+Predicted Winner : Mumbai Indians
+
+
+Chennai Super Kings win probability: 1.8%
+
+
+Mumbai Indians win probability : 98.2%
+
+
+
 
 
 
