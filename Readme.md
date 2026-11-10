@@ -240,4 +240,5 @@ The function prints the predicted winner and the estimated win probability for b
 
 - **Claude:** Used to assist with some coding. 
 - **ChatGPT:** Used to assist with README/documentation drafting. The team reviewed the documentation against the notebook and project requirements.
+- **Google Gemini:** Used by a team member to assist in preparing the project presentation(PPT).
 - The team is responsible for verifying the code, results, and documentation and for explaining the project during evaluation.
