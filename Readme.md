@@ -179,14 +179,14 @@ Chennai Super Kings win probability: 20.5%
 Mumbai Indians win probability: 79.5%
 ```
 
-More runs and fewer wickets lost give the batting-first team a higher chance, as expected. Change the teams, venue, runs and wickets to try another match. This is a probability estimate, not a guarantee.
+Higher runs and fewer wickets lost favor the batting-first team, though this provides a probability estimate, not a guarantee.
 
 ## Limitations and Future Work
 
 **Limitations**
 - Does not use ball-by-ball data, player quality, pitch conditions or weather.
-- The test set has only 244 matches.
-- Cricket outcomes are uncertain, especially during the chase.
+- The evaluation is conducted on a restricted test set comprising only 244 matches.
+- Cricket match outcomes inherently involve high uncertainty, particularly during high-pressure second-innings run chases.
 
 **Future work**
 - Add player statistics and recent team form.
