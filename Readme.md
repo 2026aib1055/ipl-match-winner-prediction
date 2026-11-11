@@ -197,7 +197,7 @@ Higher runs and fewer wickets lost favor the batting-first team, though this pro
 
 - **GitHub repository:** https://github.com/2026aib1055/ipl-match-winner-prediction
 - **Presentation (5 slides):** [slides/IPL_Match_Winner_Prediction.pptx](slides/IPL_Match_Winner_Prediction.pptx) ([PDF](slides/IPL_Match_Winner_Prediction.pdf))
-- **Project video (max 5 minutes):** see [video/project_demo_link.txt](video/project_demo_link.txt)
+- **Project video (max 5 minutes):** https://youtu.be/2WfdDRXo4pM (Also see [video/project_demo_link.txt](video/project_demo_link.txt))
 
 ## AI-Use Disclosure
 
